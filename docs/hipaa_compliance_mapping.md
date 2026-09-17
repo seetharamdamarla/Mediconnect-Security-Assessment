@@ -43,12 +43,26 @@
 
 ## Live Control Demonstration
 
-**Control §164.308(a)(5)(ii)(C) — Log-in Monitoring:**
+### Demonstrated Control: Log-in Monitoring (HIPAA §164.308(a)(5)(ii)(C))
 
-```
-# Trigger: 5 failed logins from same IP in 5 minutes
-# Alert generated in alerts.log:
-{"level":"CRITICAL","category":"BRUTE_FORCE_DETECTED","ip":"::1","attemptCount":5,"windowMinutes":5,"message":"5 failed login attempts from ::1 in 5 minutes — possible brute-force attack"}
+Under the HIPAA Security Rule (45 CFR § 164.308(a)(5)(ii)(C)), covered entities and their business associates must establish procedures for monitoring login attempts and reporting discrepancies (such as brute-force password guessing or abnormal authentication spikes).
+
+**Demonstrated Rule:** Detection of 5 failed login attempts from the same IP address within a 5-minute sliding window.
+
+**Alert Output (`backend/logs/alerts.log`):**
+
+```json
+{
+  "level": "CRITICAL",
+  "category": "BRUTE_FORCE_DETECTED",
+  "ip": "::1",
+  "attemptCount": 5,
+  "windowMinutes": 5,
+  "message": "5 failed login attempts from ::1 in 5 minutes — possible brute-force attack"
+}
 ```
 
-This demonstrates a working security detection control that satisfies the HIPAA requirement for log-in monitoring and discrepancy reporting.
+This live demonstration satisfies:
+1. **PRD Section 16 & 20:** Implementation and live demonstration of a security detection alert.
+2. **HIPAA Specification §164.308(a)(5)(ii)(C):** Automatic discrepancy alerting on suspicious authentication activity.
+

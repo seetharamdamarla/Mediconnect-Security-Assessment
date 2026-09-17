@@ -12,7 +12,7 @@
 | AS-06 | Admin privilege escalation via registration | authController.js | Critical | High | Critical | §164.308(a)(4) | Role whitelist | None | Fixed | Regression test in CI |
 | AS-05 | Missing role authorization on Rx routes | prescriptionRoutes.js | High | Medium | High | §164.308(a)(4) | authorizeRoles middleware | None | Fixed | — |
 | AS-07 | JWT valid after logout | authController.js | Medium | Medium | Medium | §164.312(a)(2)(iii) | HttpOnly + SameSite cookies | Token valid for 24h | Accepted | Implement token blacklist |
-| AS-08 | No rate limiting on login | authController.js | Medium | High | Medium | §164.308(a)(5) | Brute-force detection alert | Blocking not implemented | Partial | Add express-rate-limit |
+| AS-08 | No rate limiting on login | authController.js | Medium | High | Medium | §164.308(a)(5)(ii)(C) | Brute-force detection alert | Blocking not implemented | Partial | Add express-rate-limit |
 | SG-01 | Missing CSRF protection | app.js | Medium | Low | Medium | — | SameSite=Lax cookies | CSRF possible on older browsers | Accepted | Add csurf middleware |
 | SG-02 | TLS bypass in DB config | db/index.js | Low | Low | Low | §164.312(e)(1) | Dev environment only | Production must enable strict TLS | Accepted | Configure for production |
 | DEP-01 | Vulnerable npm dependencies | package.json | Variable | Medium | Low-High | — | Monitoring via npm audit | Known CVEs in transitive deps | Future | Major version upgrades |

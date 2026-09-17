@@ -290,7 +290,7 @@ Cookie: token=<Patient_B_JWT>
 | AS-06 | Admin Self-Registration | Critical | A01 | §164.308(a)(4) | Remediated |
 | AS-05 | Missing Role Middleware on Rx Routes | High | A01 | §164.308(a)(4) | Remediated |
 | AS-07 | No Token Revocation on Logout | Medium | A07 | §164.312(a)(2)(iii) | Accepted Risk |
-| AS-08 | No Rate Limiting on Login | Medium | A07 | §164.308(a)(5) | Partial Fix |
+| AS-08 | No Rate Limiting on Login | Medium | A07 | §164.308(a)(5)(ii)(C) | Partial Fix |
 | SG-01 | Missing CSRF Protection | Medium | A05 | — | Accepted Risk |
 | SG-02 | TLS Verification Bypass in DB Config | Low | A02 | §164.312(e)(1) | Accepted Risk |
 | DEP-01 | Vulnerable npm Dependencies | Low-High | A06 | — | Future Work |
