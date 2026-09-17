@@ -22,7 +22,8 @@
 ---
 
 ## Summary
-- **Findings:** 6 categories had findings
+- **Findings:** 7 categories had findings
 - **Pass:** 2 categories passed testing
 - **N/A:** 1 category not applicable (with justification)
+- **Total:** 10/10 OWASP Top 10 categories assessed
 - **Remediated:** A01 (fully), A09 (fully), A04/A07 (partially)

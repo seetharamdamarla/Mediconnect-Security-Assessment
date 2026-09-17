@@ -22,7 +22,7 @@
 | 10 | §164.308(a)(6) — Security Incident Procedures | Implement policies for responding to security incidents | — | Incident Response Playbook created for PHI breach via Chat IDOR | incident_response_playbook.md | Compliant |
 | 11 | §164.312(b) — Audit Controls | Implement hardware/software mechanisms to record and examine access | — | Security logger captures auth, authz, AI events, sensitive access with PII masking | securityLogger.js, security.log | Compliant |
 | 12 | §164.308(a)(8) — Evaluation | Perform periodic technical/nontechnical evaluation | — | SAST (Semgrep), SCA (npm audit), secret scanning (gitleaks), manual pen testing (Burp) | Scan reports, Burp evidence | Compliant |
-| 13 | §164.312(a)(2)(iv) — Encryption and Decryption | Encrypt ePHI | — | Passwords bcrypt-hashed, JWT signed with HS256 | bcryptjs salt rounds, JWT signing | Partially Compliant |
+| 13 | §164.312(a)(2)(iv) — Encryption and Decryption | Encrypt ePHI at rest | — | Passwords bcrypt-hashed; DB not encrypted at rest | DB default storage (TDE planned) | Gap |
 | 14 | §164.308(a)(3) — Workforce Security | Ensure appropriate access for workforce members | AS-06 | Self-registration limited to patient/doctor; admin created via DB only | validRoles check in authController | Compliant |
 
 ---
@@ -31,8 +31,8 @@
 
 | Status | Count | Percentage |
 |--------|-------|------------|
-| Compliant | 10 | 71% |
-| Partially Compliant | 3 | 22% |
+| Compliant | 11 | 79% |
+| Partially Compliant | 2 | 14% |
 | Gap | 1 | 7% |
 
 ### Gaps & Partial Compliance Details

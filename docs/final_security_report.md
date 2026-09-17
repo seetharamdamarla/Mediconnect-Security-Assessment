@@ -53,8 +53,8 @@ This assessment was conducted as a comprehensive security engineering engagement
 | Remediated and retested | 6 |
 | Accepted risk (documented) | 4 |
 | HIPAA controls mapped | 14 |
-| HIPAA compliant | 10 (71%) |
-| HIPAA partially compliant | 3 (22%) |
+| HIPAA compliant | 11 (79%) |
+| HIPAA partially compliant | 2 (14%) |
 | HIPAA gap | 1 (7%) |
 
 ### Critical Findings (Remediated)
@@ -619,11 +619,11 @@ A detailed Incident Response Playbook was developed for the most impactful vulne
 
 | Status | Count | Percentage |
 |--------|-------|------------|
-| Compliant | 10 | 71% |
-| Partially Compliant | 3 | 22% |
+| Compliant | 11 | 79% |
+| Partially Compliant | 2 | 14% |
 | Gap | 1 | 7% |
 
-### Compliant Controls (10)
+### Compliant Controls (11)
 
 | HIPAA Requirement | Evidence |
 |------------------|----------|
@@ -637,14 +637,14 @@ A detailed Incident Response Playbook was developed for the most impactful vulne
 | §164.308(a)(6) — Security Incidents | Incident Response Playbook |
 | §164.312(b) — Audit Controls | securityLogger with PII masking |
 | §164.308(a)(8) — Evaluation | SAST, SCA, secret scanning, manual pen testing |
+| §164.308(a)(3) — Workforce Security | Self-registration limited to patient/doctor; admin created via DB only |
 
-### Partially Compliant Controls (3)
+### Partially Compliant Controls (2)
 
 | HIPAA Requirement | Gap | Mitigation Plan |
 |------------------|-----|----------------|
 | §164.312(a)(2)(iii) — Auto Logoff | No server-side token revocation | Implement Redis-backed token blacklist |
 | §164.312(e)(1) — Transmission Security | TLS not enforced in development | Enable strict TLS in production |
-| §164.312(a)(2)(iv) — Encryption | Database not encrypted at rest | Enable PostgreSQL TDE or encrypted volumes |
 
 ### Gap (1)
 
