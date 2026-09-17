@@ -141,7 +141,7 @@ const DoctorChat = () => {
           <option value="" disabled>
             -- Choose a patient --
           </option>
-          <optgroup label="🗨️ Chatted Patients">
+          <optgroup label="Chatted Patients">
             {patients
               .filter(p => chattedPatientIds.includes(p.user_id))
               .map(p => {

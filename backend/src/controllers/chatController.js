@@ -3,6 +3,7 @@ const {
   InternalServerError,
   NotFoundError,
   BadRequestError,
+  ForbiddenError,
   AppError,
 } = require('../utils/errors');
 
@@ -126,6 +127,19 @@ async function getChattedPatientUserIds(req, res) {
 
 async function getChatMessages(req, res) {
   const { roomId } = req.params;
+  const userId = req.user.userId;
+
+  // Verify the requesting user is a participant in this room
+  // Room ID format is "smallerId-largerId"
+  const parts = roomId.split('-');
+  if (parts.length !== 2) {
+    return res.status(400).json({ message: 'Invalid room ID format' });
+  }
+  const [idA, idB] = parts.map(Number);
+  if (userId !== idA && userId !== idB) {
+    return res.status(403).json({ message: 'Access denied: you are not a participant in this chat' });
+  }
+
   try {
     const result = await db.query(
       `SELECT sender_id, receiver_id, sender_role, message, timestamp
@@ -142,8 +156,7 @@ async function getChatMessages(req, res) {
 }
 
 async function getUnreadMessages(req, res) {
-  const userId = Number(req.query.userId);
-  if (!userId) throw new BadRequestError('Missing userId');
+  const userId = req.user.userId;
 
   try {
     const result = await db.query(

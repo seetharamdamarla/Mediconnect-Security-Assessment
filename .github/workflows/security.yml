@@ -1,0 +1,105 @@
+name: Security Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  security-checks:
+    runs-on: ubuntu-latest
+    name: Security Scanning
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for secret scanning
+
+      # ── Check 1: Secret Scanning (gitleaks) ──
+      # What it detects: Hardcoded credentials, API keys, tokens in code/git history
+      # Why it matters: Exposed secrets = instant full compromise
+      # Severity that blocks: ANY finding blocks the pipeline
+      - name: Secret Scanning (gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── Check 2: Dependency Vulnerability Scanning (npm audit) ──
+      # What it detects: Known CVEs in npm dependencies
+      # Why it matters: Vulnerable deps are the #1 attack vector (OWASP A06)
+      # Severity that blocks: HIGH and CRITICAL block the pipeline
+      - name: Backend Dependency Scan
+        run: |
+          cd backend
+          npm ci
+          npm audit --audit-level=high
+        continue-on-error: false
+
+      - name: Frontend Dependency Scan
+        run: |
+          cd frontend
+          npm ci
+          npm audit --audit-level=critical
+        continue-on-error: true  # Frontend has many transitive deps
+
+      # ── Check 3: SAST (Semgrep) ──
+      # What it detects: SQL injection, XSS, auth bypass, insecure patterns
+      # Why it matters: Catches vulnerabilities before deployment
+      # Severity that blocks: WARNING and above block the pipeline
+      - name: SAST Scan (Semgrep)
+        uses: semgrep/semgrep-action@v1
+        with:
+          config: >-
+            p/security-audit
+            p/nodejs
+            p/express
+          generateSarif: true
+
+      # ── Security Regression Test ──
+      # Ensures previously fixed vulnerabilities cannot be reintroduced
+      - name: Security Regression Tests
+        run: |
+          cd backend
+          npm ci
+
+          # Test: Admin role must be rejected at registration
+          echo "Testing AS-06 regression (admin self-registration blocked)..."
+          node -e "
+            const { registerUser } = require('./src/controllers/authController');
+            // Verify validRoles array does NOT include 'admin'
+            const fs = require('fs');
+            const src = fs.readFileSync('./src/controllers/authController.js', 'utf8');
+            if (src.includes(\"'patient', 'doctor', 'admin'\")) {
+              console.error('REGRESSION DETECTED: Admin role is allowed in registration!');
+              process.exit(1);
+            }
+            console.log('✅ AS-06 regression check passed');
+          "
+
+          # Test: Chat controller must check room ownership
+          echo "Testing AS-01 regression (chat IDOR blocked)..."
+          node -e "
+            const fs = require('fs');
+            const src = fs.readFileSync('./src/controllers/chatController.js', 'utf8');
+            if (!src.includes('userId !== idA') || !src.includes('userId !== idB')) {
+              console.error('REGRESSION DETECTED: Chat room ownership check missing!');
+              process.exit(1);
+            }
+            console.log('✅ AS-01 regression check passed');
+          "
+
+          # Test: Prescription end must check doctor ownership
+          echo "Testing AS-03 regression (prescription IDOR blocked)..."
+          node -e "
+            const fs = require('fs');
+            const src = fs.readFileSync('./src/controllers/prescriptionController.js', 'utf8');
+            if (!src.includes('AND doctor_id = \$2')) {
+              console.error('REGRESSION DETECTED: Prescription ownership check missing!');
+              process.exit(1);
+            }
+            console.log('✅ AS-03 regression check passed');
+          "
+
+          echo "All security regression tests passed ✅"

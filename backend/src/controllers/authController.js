@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const db = require('../db');
 const { BadRequestError, InternalServerError, AppError } = require('../utils/errors');
 const logger = require('../utils/logger.js');
+const securityLogger = require('../utils/securityLogger');
 
 const isProduction = process.env.NODE_ENV === 'production';
 logger.info(isProduction);
@@ -24,9 +25,9 @@ const registerUser = async (req, res) => {
         'Password must be at least 6 characters long and include letters, numbers, and a special character.'
       );
     }
-    const validRoles = ['patient', 'doctor', 'admin'];
+    const validRoles = ['patient', 'doctor'];
     if (!validRoles.includes(role)) {
-      throw new BadRequestError('Invalid role specified.');
+      throw new BadRequestError('Invalid role. Only patient and doctor registration is allowed.');
     }
 
     const { rows: exists } = await db.query('SELECT 1 FROM users WHERE email = $1', [email]);
@@ -53,6 +54,8 @@ const registerUser = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
 
+    securityLogger.logRegistration(userId, email, role, req.ip);
+
     res.status(201).json({
       message: 'Registration successful. Please complete your profile.',
     });
@@ -73,11 +76,13 @@ const loginUser = async (req, res) => {
     const { rows } = await db.query('SELECT * FROM users WHERE email = $1', [email]);
     const user = rows[0];
     if (!user) {
+      securityLogger.logLoginFailure(email, req.ip, 'User not found');
       throw new BadRequestError('Invalid email or password');
     }
 
     const ok = await bcrypt.compare(password, user.password_hash);
     if (!ok) {
+      securityLogger.logLoginFailure(email, req.ip, 'Invalid password');
       throw new BadRequestError('Invalid email or password');
     }
 
@@ -92,6 +97,8 @@ const loginUser = async (req, res) => {
       path: '/',
       maxAge: 24 * 60 * 60 * 1000,
     });
+
+    securityLogger.logLoginSuccess(user.id, email, req.ip, req.get('User-Agent'));
 
     res.json({
       message: 'Login successful',

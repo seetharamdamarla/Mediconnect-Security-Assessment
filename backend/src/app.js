@@ -15,6 +15,7 @@ const activityRoutes = require('./routes/activityRoutes');
 const chatRoutes = require('./routes/chatRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const aptRoutes = require('./routes/appointmentRoutes');
+const aiRoutes = require('./routes/aiRoutes');
 
 const { AppError, ValidationError, NotFoundError } = require('./utils/errors');
 
@@ -45,6 +46,7 @@ app.use('/api/symptoms', symptomRoutes);
 app.use('/api/activity', activityRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/appointments', aptRoutes);
+app.use('/api/ai', aiRoutes);
 
 app.use((req, res, next) => {
   next(new NotFoundError(`Cannot ${req.method} ${req.originalUrl}`));

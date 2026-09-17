@@ -63,15 +63,24 @@ const addPrescription = async (req, res) => {
 
 const endPrescription = async (req, res) => {
   const id = req.params.id;
+  const userId = req.user.userId;
+
   try {
+    // Verify the requesting user is the prescribing doctor
+    const dr = await db.query('SELECT id FROM doctors WHERE user_id = $1', [userId]);
+    if (dr.rows.length === 0) {
+      return res.status(403).json({ message: 'Only doctors can end prescriptions' });
+    }
+    const doctorId = dr.rows[0].id;
+
     const result = await db.query(
       `UPDATE prescriptions
           SET end_date = CURRENT_DATE
-        WHERE id = $1`,
-      [id]
+        WHERE id = $1 AND doctor_id = $2`,
+      [id, doctorId]
     );
     if (result.rowCount === 0) {
-      return res.status(404).json({ message: 'Prescription not found' });
+      return res.status(404).json({ message: 'Prescription not found or you are not the prescribing doctor' });
     }
     return res.json({ message: 'Prescription marked as ended' });
   } catch (err) {

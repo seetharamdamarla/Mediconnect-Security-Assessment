@@ -121,7 +121,7 @@ const Chat = () => {
           <option value="" disabled>
             -- Choose a doctor --
           </option>
-          <optgroup label="🗨️ Chatted Doctors">
+          <optgroup label="Chatted Doctors">
             {doctors
               .filter(d => chattedDoctorUserIds.includes(d.user_id))
               .map(d => {
