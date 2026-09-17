@@ -1,8 +1,5 @@
 # Risk Register — MediConnect
 
-**Last Updated:** 2026-09-16  
-**Framework:** HIPAA Security Rule  
-
 ---
 
 ## Risk Register

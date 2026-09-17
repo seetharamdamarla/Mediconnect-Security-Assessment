@@ -1,10 +1,4 @@
-# Incident Response Playbook
-## HIPAA PHI Data Breach via Chat IDOR (AS-01)
-
-**Classification:** PHI Data Breach  
-**Severity:** Critical  
-**Compliance Framework:** HIPAA Security Rule §164.308(a)(6)  
-**Last Updated:** 2026-09-16  
+# Incident Response Playbook — PHI Data Breach via Chat IDOR (AS-01)
 
 ---
 

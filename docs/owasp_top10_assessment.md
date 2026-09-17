@@ -1,9 +1,5 @@
 # OWASP Top 10 Assessment — MediConnect
 
-**Assessment Date:** 2026-09-16  
-**Application:** MediConnect (React + Express.js + PostgreSQL)  
-**Methodology:** Automated (Semgrep, npm audit) + Manual (Burp Suite CE)  
-
 ---
 
 | # | Category | Tests Performed | Result | Evidence | Finding IDs | Severity | Status |

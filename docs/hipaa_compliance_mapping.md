@@ -1,9 +1,5 @@
 # HIPAA Compliance Mapping — MediConnect
 
-**Framework:** HIPAA Security Rule (45 CFR Part 164)  
-**Scope:** MediConnect healthcare application  
-**Assessment Date:** 2026-09-16  
-
 ---
 
 ## Control Mapping Table
