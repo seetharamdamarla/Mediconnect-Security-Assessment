@@ -8,13 +8,13 @@
 
 All technical deliverables, audit reports, threat models, and Burp Suite verification evidence are organized in this repository:
 
-| Deliverable | Description | Links |
+| Deliverable | Description | Link |
 | :--- | :--- | :--- |
-| **Master Security & Compliance Report** | Executive summary, methodology, vulnerability register, HIPAA controls & remediation roadmap | [Markdown](docs/security_compliance_report.md) \| [PDF](docs/pdfs/security_compliance_report.pdf) |
-| **OWASP Top 10 & Vulnerability Register** | Detailed technical analysis of all 10 identified vulnerabilities with CVSS scores | [Markdown](docs/owasp_top10_and_vulnerability_register.md) \| [PDF](docs/pdfs/owasp_top10_and_vulnerability_register.pdf) |
-| **Architecture & Threat Model** | STRIDE threat model, trust boundaries, and data flow analysis | [Markdown](docs/architecture_dataflow_threat_model.md) \| [PDF](docs/pdfs/architecture_dataflow_threat_model.pdf) |
-| **HIPAA Compliance Matrix** | Technical safeguard mapping (§164.312) raising compliance from 43% to 79% | [Markdown](docs/hipaa_compliance_mapping.md) \| [PDF](docs/pdfs/hipaa_compliance_mapping.pdf) |
-| **Incident Response Playbook** | 6-phase triage, containment, eradication, and notification procedures | [Markdown](docs/incident_response_playbook.md) \| [PDF](docs/pdfs/incident_response_playbook.pdf) |
+| **Master Security & Compliance Report** | Executive summary, methodology, vulnerability register, HIPAA controls & remediation roadmap | [docs/security_compliance_report.md](docs/security_compliance_report.md) |
+| **OWASP Top 10 & Vulnerability Register** | Detailed technical analysis of all 10 identified vulnerabilities with CVSS scores | [docs/owasp_top10_and_vulnerability_register.md](docs/owasp_top10_and_vulnerability_register.md) |
+| **Architecture & Threat Model** | STRIDE threat model, trust boundaries, and data flow analysis | [docs/architecture_dataflow_threat_model.md](docs/architecture_dataflow_threat_model.md) |
+| **HIPAA Compliance Matrix** | Technical safeguard mapping (§164.312) raising compliance from 43% to 79% | [docs/hipaa_compliance_mapping.md](docs/hipaa_compliance_mapping.md) |
+| **Incident Response Playbook** | 6-phase triage, containment, eradication, and notification procedures | [docs/incident_response_playbook.md](docs/incident_response_playbook.md) |
 | **Burp Suite Evidence Screenshots** | 15 empirical before-and-after exploit and remediation proofs | [`evidence/burp_screenshots/`](evidence/burp_screenshots/) |
 | **CI/CD Security Automation** | 4-stage GitHub Actions pipeline (Gitleaks, npm audit, Semgrep SAST, Regressions) | [`.github/workflows/security.yml`](.github/workflows/security.yml) |
 
