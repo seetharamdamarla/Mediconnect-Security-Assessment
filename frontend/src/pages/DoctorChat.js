@@ -58,17 +58,17 @@ const DoctorChat = () => {
   }, [doctorUserId]);
 
   useEffect(() => {
-    if (doctorUserId) fetchChatted();
-  }, [doctorUserId, fetchChatted]);
-  useEffect(() => {
     if (!doctorUserId) return;
     fetchPatients();
-    const iv = setInterval(fetchPatients, 10000);
+    fetchChatted();
+    fetchUnread();
+    const iv = setInterval(() => {
+      fetchPatients();
+      fetchChatted();
+      fetchUnread();
+    }, 4000);
     return () => clearInterval(iv);
-  }, [doctorUserId, fetchPatients]);
-  useEffect(() => {
-    if (doctorUserId) fetchUnread();
-  }, [doctorUserId, fetchUnread]);
+  }, [doctorUserId, fetchPatients, fetchChatted, fetchUnread]);
 
   useEffect(() => {
     if (!selectedPatient) return;

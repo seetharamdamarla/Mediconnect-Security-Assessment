@@ -62,39 +62,14 @@ async function getPatientsForDoctor(req, res) {
 
     const result = await db.query(
       `
-      WITH contacts AS (
-        -- 1) All patients you’ve prescribed to
-        SELECT p.user_id AS patient_user_id
-        FROM prescriptions pr
-        JOIN patients p ON p.id = pr.patient_id
-        WHERE pr.doctor_id = $1
-
-        UNION
-
-        -- 2) Patients who started chats with you
-        SELECT cm.sender_id AS patient_user_id
-        FROM chat_messages cm
-        WHERE cm.sender_role = 'patient'
-          AND cm.receiver_id = $2
-
-        UNION
-
-        -- 3) Patients you’ve messaged
-        SELECT cm.receiver_id AS patient_user_id
-        FROM chat_messages cm
-        WHERE cm.sender_role = 'doctor'
-          AND cm.sender_id = $2
-      )
       SELECT DISTINCT
         p.id AS patient_id,
         p.user_id AS user_id,
         p.first_name || ' ' || p.last_name AS patient_name
-      FROM contacts c
-      JOIN patients p ON p.user_id = c.patient_user_id
-      JOIN users    u ON u.id       = c.patient_user_id
+      FROM patients p
+      JOIN users u ON u.id = p.user_id
       ORDER BY patient_name;
-      `,
-      [doctorId, doctorUserId]
+      `
     );
 
     res.json(result.rows);

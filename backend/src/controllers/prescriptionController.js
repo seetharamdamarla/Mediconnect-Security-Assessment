@@ -33,7 +33,7 @@ const addPrescription = async (req, res) => {
     const pt = await db.query(
       `SELECT id
          FROM patients
-        WHERE government_id = $1
+        WHERE (government_id = $1 OR CAST(id AS TEXT) = $1 OR CAST(user_id AS TEXT) = $1)
           AND CONCAT(first_name, ' ', last_name) = $2
           AND birth_date = $3`,
       [patientId, patientName, patientDob]

@@ -1,9 +1,32 @@
-# MediConnect
+# MediConnect — Healthcare Platform & Security Assessment
+
+> **Comprehensive Security & Compliance Assessment**: OWASP Top 10 remediation, HIPAA Security Rule alignment (79% compliance), real-time security logging, and automated CI/CD security pipeline.
+
+---
+
+## Security Assessment & Deliverables
+
+All technical deliverables, audit reports, threat models, and Burp Suite verification evidence are organized in this repository:
+
+| Deliverable | Description | Links |
+| :--- | :--- | :--- |
+| **Master Security & Compliance Report** | Executive summary, methodology, vulnerability register, HIPAA controls & remediation roadmap | [Markdown](docs/security_compliance_report.md) \| [PDF](docs/pdfs/security_compliance_report.pdf) |
+| **OWASP Top 10 & Vulnerability Register** | Detailed technical analysis of all 10 identified vulnerabilities with CVSS scores | [Markdown](docs/owasp_top10_and_vulnerability_register.md) \| [PDF](docs/pdfs/owasp_top10_and_vulnerability_register.pdf) |
+| **Architecture & Threat Model** | STRIDE threat model, trust boundaries, and data flow analysis | [Markdown](docs/architecture_dataflow_threat_model.md) \| [PDF](docs/pdfs/architecture_dataflow_threat_model.pdf) |
+| **HIPAA Compliance Matrix** | Technical safeguard mapping (§164.312) raising compliance from 43% to 79% | [Markdown](docs/hipaa_compliance_mapping.md) \| [PDF](docs/pdfs/hipaa_compliance_mapping.pdf) |
+| **Incident Response Playbook** | 6-phase triage, containment, eradication, and notification procedures | [Markdown](docs/incident_response_playbook.md) \| [PDF](docs/pdfs/incident_response_playbook.pdf) |
+| **Burp Suite Evidence Screenshots** | 15 empirical before-and-after exploit and remediation proofs | [`evidence/burp_screenshots/`](evidence/burp_screenshots/) |
+| **CI/CD Security Automation** | 4-stage GitHub Actions pipeline (Gitleaks, npm audit, Semgrep SAST, Regressions) | [`.github/workflows/security.yml`](.github/workflows/security.yml) |
+
+---
+
+## About MediConnect
 
 MediConnect is a full-stack web application built with React for the frontend, Express.js for the backend, and PostgreSQL for the database. The system is designed to connect patients, doctors, and admins in a healthcare environment, allowing users to manage appointments, prescriptions, profiles, and communications through real-time chat. It implements Role-Based Access Control (RBAC) for different user roles (patient, doctor, admin) with secure authentication and profile management.
 
 ## Table of Contents
 
+- [Security Assessment & Deliverables](#️-security-assessment--deliverables)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Project Setup](#project-setup)
